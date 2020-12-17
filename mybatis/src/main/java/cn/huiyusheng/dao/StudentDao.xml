@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 使用namespace 的是dao接口的全限定名称-->
+<mapper namespace="cn.huiyusheng.dao.StudentDao">
+<!--    <select id="selectBlog" resultType="Blog">-->
+<!--    select * from Blog where id = #{id}-->
+<!--  </select>-->
+
+    <!--查询一个学生student
+    id:是要执行的sql语句的唯一表示，是一个自定义字符串
+        推荐使用dao接口中的方法名
+    resultType:告诉mybatis，执行sql语句，把数据赋给那个类型的java对象。
+            resultType的值现在使用的java对象的全限定名称
+    -->
+    <select id="selectStudentById" resultType="cn.huiyusheng.domain.Student">
+        select id,name,age from student where id= #{studentId}
+    </select>
+
+    <!--添加insert
+        insert into student values(1003,"yjr","yjr@qq.com","18")
+        如果传入给mybatis是一个java对象，使用#{属性名}获取此属性的值。
+        属性的值会放到#{}的位置,mybatis执行此属性 对应的getXXX(),
+    -->
+    <insert id="insertStudent">
+        insert into student values(#{id},#{name},#{email},#{age})
+    </insert>
+</mapper>
+
+<!--
+    1.约束文件
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+        约束文件作用：定义和限制当前文件中可以使用的标签和属性，以及标签出现的顺序
+    2.mapper是跟标签
+      namespace：命名空间必须有值，不能为空，唯一值
+                 推荐使用Dao接口的全限定名称
+            作用：参与识别sql语句的作用
+    3.在mapper里面可以写<insert>,<update>,<delete>,<select>等标签
+        <insert>里面是insert语句，表示执行的是insert操作
+        <update>里面是update语句，表示执行的是update操作
+        <delete>里面是delete语句，表示执行的是delete操作
+        <select>里面是select语句，表示执行的是select操作
+
+-->
